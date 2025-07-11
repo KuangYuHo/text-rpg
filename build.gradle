@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'war'
     id 'org.springframework.boot' version '3.5.3'
     id 'io.spring.dependency-management' version '1.1.7'
 }
@@ -28,13 +29,34 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // ✅ JSP 編譯支援
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+
+    // ✅ JSTL 標籤庫支援（新版 jakarta 命名）
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
+
+    // ✅ JSP API 支援，包含 TagLibraryValidator
+    implementation 'jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.0.0'
+
+    // ✅ Servlet API（必須是 provided，不要與 Spring 衝突）
+    providedRuntime 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+    // ✅ Lombok 支援
+    implementation 'org.projectlombok:lombok:1.18.30'
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // ✅ 資料庫驅動
+    runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+
+    // ✅ 測試
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
+
 
 tasks.named('test') {
     useJUnitPlatform()
